@@ -8,8 +8,8 @@ import { motion } from "framer-motion";
 
 const AddJob = () => {
   const [title, setTitle] = useState("");
-  const [location, setLocation] = useState("Bangalore");
-  const [category, setCategory] = useState("Programming");
+  const [location, setLocation] = useState("Amsterdam");
+  const [category, setCategory] = useState("Nursing");
   const [level, setLevel] = useState("Junior Level");
   const [salary, setSalary] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);

@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { useClerk, UserButton, useUser } from "@clerk/clerk-react";
 import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
-import { Zap, Briefcase } from "lucide-react";
+import { Briefcase } from "lucide-react";
+import logo from "../assets/newlogo.svg";
 
 const Navbar = () => {
   const { openSignIn } = useClerk();
@@ -36,17 +37,16 @@ const Navbar = () => {
             ? "mx-4 my-3 max-w-6xl md:mx-auto bg-white/95 backdrop-blur-lg rounded-2xl shadow-lg border border-gray-100/50 py-4 px-6" 
             : " mx-8 rounded-xl bg-white shadow-sm border-b border-gray-100 py-6 px-8"
         } flex justify-between items-center`}>
-          {/* New Logo */}
+          {/* Logo */}
           <div 
             onClick={() => navigate("/")} 
             className="flex items-center gap-2 cursor-pointer group"
           >
-            <div className={`bg-gradient-to-br from-blue-600 to-indigo-800 p-2 rounded-lg ${scrolled ? 'shadow-lg' : ''} group-hover:shadow-blue-500/30 transition-all duration-300`}>
-              <Zap size={24} className="text-white" />
-            </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              Prodigy
-            </span>
+            <img
+              src={logo}
+              alt="Medical Recruiter"
+              className={`h-11 md:h-14 w-auto transition-all duration-300 ${scrolled ? "drop-shadow-sm" : ""}`}
+            />
           </div>
 
           {/* User section with premium styling */}
@@ -55,14 +55,14 @@ const Navbar = () => {
               <>
                 <Link 
                   to="/applications" 
-                  className="hidden md:flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-all duration-200 px-4 py-2 rounded-lg hover:bg-blue-50"
+                  className="hidden md:flex items-center gap-2 text-base text-gray-700 hover:text-blue-600 transition-all duration-200 px-4 py-2 rounded-lg hover:bg-blue-50"
                 >
-                  <Briefcase size={18} />
+                  <Briefcase size={20} />
                   <span className="font-medium">My Jobs</span>
                 </Link>
                 <div className="flex items-center gap-3">
                   <div className="hidden md:block">
-                    <span className="text-sm font-medium text-gray-600">
+                    <span className="text-base font-medium text-gray-600">
                       Hi, {user.firstName}
                     </span>
                   </div>
@@ -81,13 +81,13 @@ const Navbar = () => {
               <>
                 <button
                   onClick={(e) => setShowRecruiterLogin(true)}
-                  className="hidden md:block text-sm font-medium text-gray-600 hover:text-blue-600 transition-all duration-200 px-4 py-2 rounded-lg hover:bg-blue-50"
+                  className="hidden md:block text-base font-medium text-gray-600 hover:text-blue-600 transition-all duration-200 px-4 py-2 rounded-lg hover:bg-blue-50"
                 >
                   Recruiter Portal
                 </button>
                 <button
                   onClick={(e) => openSignIn()}
-                  className={`bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white px-6 py-2.5 rounded-xl font-medium text-sm ${scrolled ? 'shadow-lg hover:shadow-blue-500/30' : 'hover:shadow-md'} transition-all duration-300`}
+                  className={`bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white px-7 py-2.5 rounded-xl font-medium text-base ${scrolled ? 'shadow-lg hover:shadow-blue-500/30' : 'hover:shadow-md'} transition-all duration-300`}
                 >
                   Get Started
                 </button>

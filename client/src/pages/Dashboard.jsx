@@ -66,7 +66,7 @@ const Dashboard = () => {
             className="fixed lg:static left-0 top-0 w-72 h-full bg-white/60 backdrop-blur-md  z-50 flex flex-col justify-between  border-r border-white/30"
           >
             <div className="p-6">
-              <img src={logo} alt="Logo" className="h-15 mb-8 cursor-pointer" onClick={() => navigate("/")} />
+              <img src={logo} alt="Medical Recruiter" className="h-14 w-auto mb-8 cursor-pointer" onClick={() => navigate("/")} />
               <div className="space-y-3">
                 {navItems.map(({ path, label, icon }, i) => (
                   <NavLink

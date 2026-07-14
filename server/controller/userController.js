@@ -1,25 +1,22 @@
-import e from "express";
 import User from "../models/User.js";
 import JobApplication from "../models/JobApplication.js";
 import Job from "../models/Job.js";
 import { v2 } from "cloudinary";
+import { getOrCreateUser } from "../utils/syncClerkUser.js";
 
 // Get user Data
 export const getUserData = async (req, res) => {
   const userId = req.auth.userId;
 
-  console.log("User ID from request:", userId); // Log the user ID
+  if (!userId) {
+    return res.json({ success: false, message: "Not authenticated" });
+  }
 
   try {
-    const user = await User.findById(userId);
-
-    if (!user) {
-      console.log("User not found in database"); // Log if user is not found
-      return res.json({ success: false, message: "User not found" });
-    }
+    const user = await getOrCreateUser(userId);
     res.json({ success: true, user });
   } catch (error) {
-    console.log("Error fetching user:", error.message); // Log any errors
+    console.log("Error fetching user:", error.message);
     res.json({ success: false, message: error.message });
   }
 };
@@ -29,7 +26,13 @@ export const applyForJob = async (req, res) => {
   const { jobId } = req.body;
   const userId = req.auth.userId;
 
+  if (!userId) {
+    return res.json({ success: false, message: "Not authenticated" });
+  }
+
   try {
+    await getOrCreateUser(userId);
+
     const isAlreadyApplied = await JobApplication.findOne({ userId, jobId });
 
     if (isAlreadyApplied) {
@@ -63,6 +66,12 @@ export const getUserJobApplications = async (req, res) => {
   try {
     const userId = req.auth.userId;
 
+    if (!userId) {
+      return res.json({ success: false, message: "Not authenticated" });
+    }
+
+    await getOrCreateUser(userId);
+
     const applications = await JobApplication.find({ userId })
       .populate("companyId", "name email image")
       .populate("jobId", "title description location level salary")
@@ -87,9 +96,11 @@ export const updateUserResume = async (req, res) => {
     const userId = req.auth.userId;
     const resumeFile = req.file;
 
-    console.log("Resume file:", resumeFile);
+    if (!userId) {
+      return res.json({ success: false, message: "Not authenticated" });
+    }
 
-    const userData = await User.findById(userId);
+    const userData = await getOrCreateUser(userId);
 
     if (resumeFile) {
       const resumeUpload = await v2.uploader.upload(resumeFile.path);
